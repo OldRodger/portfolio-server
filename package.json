@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --watch ./server.js",
+    "start": "NODE_ENV=production node --watch ./server.js"
+  },
+  "keywords": [],
+  "author": "Nwachukwu Celestine",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.0",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
