@@ -34,6 +34,7 @@ module.exports = (err, req, res, next) => {
 
   if (err instanceof mongoose.Error.ValidationError)
     error = handleValidationError(err);
+  if (err instanceof mongoose.Error.CastError) error = handleCastError(err);
 
   sendProdErr(error, res);
 };
@@ -45,4 +46,9 @@ const handleValidationError = (err) => {
     .join(". ");
   const message = `Invalid input data. ${errors}`;
   return new AppError(message, 400);
+};
+
+const handleCastError = (err) => {
+  const message = `Invalid ${err.path}: ${err.value}`;
+  return new AppError(message, 422);
 };

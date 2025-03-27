@@ -5,3 +5,5 @@ const handlerFactory = new HandlerFactory(Project);
 exports.createProject = handlerFactory.createOne();
 exports.getAllProjects = handlerFactory.getAll();
 exports.getProject = handlerFactory.getOne();
+exports.updateProject = handlerFactory.updateOne();
+exports.deleteProject = handlerFactory.deleteOne();

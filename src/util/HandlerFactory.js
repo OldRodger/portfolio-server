@@ -1,5 +1,4 @@
 const catchAsync = require("./catchAsync");
-const Project = require("../model/Project");
 const AppError = require("./AppError");
 
 module.exports = class HandlerFactory {
@@ -34,18 +33,50 @@ module.exports = class HandlerFactory {
 
   getOne() {
     return catchAsync(async (req, res) => {
-      const doc = await this.model.findOne({
-        slug: req.params.slug,
-      });
+      const doc = await this.model.findById(req.params.id);
 
-      if (!doc)
-        throw new AppError(`Project ${req.params.slug} cannot be found`);
+      if (!doc) throw new AppError(`No document found with that ID`, 404);
 
       return res.status(200).json({
         status: "success",
         data: {
           doc,
         },
+      });
+    });
+  }
+
+  updateOne() {
+    return catchAsync(async (req, res) => {
+      const doc = await this.model.findByIdAndUpdate(
+        req.params.id,
+        { ...req.body },
+        {
+          runValidators: true,
+          new: true,
+        }
+      );
+
+      if (!doc) throw new AppError(`No document found with that ID`, 404);
+
+      return res.status(200).json({
+        status: "success",
+        data: {
+          doc,
+        },
+      });
+    });
+  }
+
+  deleteOne() {
+    return catchAsync(async (req, res) => {
+      const doc = await this.model.findByIdAndDelete(req.params.id);
+
+      if (!doc) throw new AppError(`No document found with that ID`, 404);
+
+      return res.status(204).json({
+        status: "success",
+        data: null,
       });
     });
   }
